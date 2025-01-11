@@ -14,15 +14,21 @@ import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBar
 import androidx.compose.material3.TopAppBarDefaults.topAppBarColors
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.danp1925.asynchronousmigration.ui.theme.AsynchronousMigrationTheme
 
 @Composable
-fun MainScreen() {
-    val digimons = makeFakeDigimons()
-    MainScreenContent(digimons = digimons)
+fun MainScreen(
+    viewModel: MainViewModel
+) {
+
+    val uiState by viewModel.uiState.collectAsStateWithLifecycle()
+
+    MainScreenContent(digimons = uiState)
 }
 
 @OptIn(ExperimentalMaterial3Api::class)
@@ -58,13 +64,14 @@ fun MainScreenContent(digimons: List<Digimon>) {
 @Preview(showBackground = true, showSystemUi = true)
 @Composable
 fun GreetingPreview() {
+    val digimons = listOf(
+        Digimon(name = "Monodramon", id = "BT1-010"),
+        Digimon(name = "Agumon", id = "BT1-011")
+    )
+
     AsynchronousMigrationTheme {
-        MainScreenContent(digimons = makeFakeDigimons())
+        MainScreenContent(digimons = digimons)
     }
 }
 
-private fun makeFakeDigimons() = listOf(
-    Digimon(name = "Monodramon", id = "BT1-010"),
-    Digimon(name = "Agumon", id = "BT1-011")
-)
 

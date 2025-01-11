@@ -8,12 +8,14 @@ import com.danp1925.asynchronousmigration.ui.theme.AsynchronousMigrationTheme
 
 class MainActivity : ComponentActivity() {
 
+    private val viewModel = MainViewModel()
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
         setContent {
             AsynchronousMigrationTheme {
-                MainScreen()
+                MainScreen(viewModel)
             }
         }
     }
