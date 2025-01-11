@@ -1,4 +1,4 @@
-package com.danp1925.asynchronousmigration
+package com.danp1925.asynchronousmigration.presentation
 
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
@@ -19,6 +19,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
+import com.danp1925.asynchronousmigration.domain.Digimon
 import com.danp1925.asynchronousmigration.ui.theme.AsynchronousMigrationTheme
 
 @Composable
