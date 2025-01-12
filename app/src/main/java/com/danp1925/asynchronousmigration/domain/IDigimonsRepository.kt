@@ -1,5 +1,5 @@
 package com.danp1925.asynchronousmigration.domain
 
 interface IDigimonsRepository {
-    fun getDigimons(): List<Digimon>
+    fun getDigimons(onSuccess:(List<Digimon>)-> Unit)
 }

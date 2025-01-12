@@ -8,14 +8,18 @@ import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.update
 
 class MainViewModel(
-    private val getDigimons : GetDigimonsUseCase
+    private val getDigimons: GetDigimonsUseCase
 ) : ViewModel() {
 
     private val _uiState = MutableStateFlow(emptyList<Digimon>())
     val uiState: StateFlow<List<Digimon>> = _uiState
 
     init {
-        _uiState.update { getDigimons() }
+        getDigimons(
+            onSuccess = { digimons ->
+                _uiState.update { digimons }
+            }
+        )
     }
 
 }
