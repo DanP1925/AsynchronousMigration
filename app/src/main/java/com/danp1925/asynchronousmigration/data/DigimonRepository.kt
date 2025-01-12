@@ -10,7 +10,7 @@ class DigimonRepository(
     private val digimonService: DigimonService
 ) : IDigimonsRepository {
 
-    override fun getDigimons(onSuccess: (List<Digimon>) -> Unit) {
+    override fun getDigimons(onSuccess: (List<Digimon>) -> Unit, onFailure: (String) -> Unit) {
         digimonService.getDigimons().enqueue(
             object : Callback<List<RemoteDigimon>> {
                 override fun onResponse(
@@ -19,10 +19,13 @@ class DigimonRepository(
                 ) {
                     if (response.isSuccessful) {
                         onSuccess(response.body()?.map { it.toDomain() } ?: emptyList())
+                    } else {
+                        onFailure("There was an error")
                     }
                 }
 
                 override fun onFailure(call: Call<List<RemoteDigimon>>, error: Throwable) {
+                    onFailure(error.message ?: "There was an error")
                 }
             }
         )

@@ -4,7 +4,7 @@ class GetDigimonsUseCase(
     private val digimonRepository: IDigimonsRepository
 ) {
 
-    operator fun invoke(onSuccess: (List<Digimon>) -> Unit) =
-        digimonRepository.getDigimons(onSuccess)
+    operator fun invoke(onSuccess: (List<Digimon>) -> Unit, onFailure: (String) -> Unit) =
+        digimonRepository.getDigimons(onSuccess, onFailure)
 
 }

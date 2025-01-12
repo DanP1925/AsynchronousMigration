@@ -17,7 +17,8 @@ class MainViewModel(
     init {
         _uiState.update { MainUiState.Loading }
         getDigimons(
-            onSuccess = { digimons -> _uiState.update { MainUiState.Success(digimons) } }
+            onSuccess = { digimons -> _uiState.update { MainUiState.Success(digimons) } },
+            onFailure = { errorMessage -> _uiState.update { MainUiState.Error(errorMessage) } }
         )
     }
 

@@ -23,6 +23,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.danp1925.asynchronousmigration.domain.Digimon
 import com.danp1925.asynchronousmigration.ui.theme.AsynchronousMigrationTheme
@@ -61,7 +62,13 @@ fun MainScreenContent(uiState: MainUiState) {
                 )
             }
 
-            is MainUiState.Error -> {}
+            is MainUiState.Error -> {
+                MainScreenError(
+                    errorMessage = uiState.errorMessage,
+                    modifier = Modifier.padding(innerPadding)
+                )
+            }
+
             MainUiState.Loading -> {
                 MainScreenLoading(Modifier.padding(innerPadding))
             }
@@ -104,6 +111,23 @@ private fun MainScreenLoading(
     }
 }
 
+@Composable
+fun MainScreenError(
+    errorMessage: String,
+    modifier: Modifier = Modifier
+) {
+    Column(
+        modifier = modifier.fillMaxSize(),
+        horizontalAlignment = Alignment.CenterHorizontally,
+        verticalArrangement = Arrangement.Center
+    ) {
+        Text(
+            text = errorMessage,
+            fontSize = 32.sp
+        )
+    }
+}
+
 @Preview(showBackground = true)
 @Composable
 fun MainScreenSuccessfulPreview() {
@@ -126,3 +150,11 @@ fun MainScreenLoadingPreview() {
     }
 }
 
+
+@Preview(showBackground = true)
+@Composable
+fun MainScreenErrorPreview() {
+    AsynchronousMigrationTheme {
+        MainScreenError("There was an error")
+    }
+}
