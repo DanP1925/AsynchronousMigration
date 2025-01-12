@@ -1,13 +1,11 @@
-package com.danp1925.asynchronousmigration
+package com.danp1925.asynchronousmigration.presentation
 
 import com.danp1925.asynchronousmigration.domain.Digimon
 import com.danp1925.asynchronousmigration.domain.GetDigimonsUseCase
-import com.danp1925.asynchronousmigration.presentation.MainUiState
-import com.danp1925.asynchronousmigration.presentation.MainViewModel
-import io.mockk.Runs
 import io.mockk.every
 import io.mockk.just
 import io.mockk.mockk
+import io.mockk.runs
 import io.mockk.slot
 import junit.framework.TestCase.assertEquals
 import junit.framework.TestCase.assertTrue
@@ -33,7 +31,7 @@ class MainViewModelTest {
         val expectedDigimons = digimons
         every {
             getDigimonsUseCase(onSuccess = capture(onSuccessSlot), onFailure = any())
-        } just Runs
+        } just runs
 
         viewModel
         onSuccessSlot.captured.invoke(digimons)
@@ -54,7 +52,7 @@ class MainViewModelTest {
         val expectedErrorMessage = "error message"
         every {
             getDigimonsUseCase(onSuccess = any(), onFailure = capture(onFailureSlot))
-        } just Runs
+        } just runs
 
         viewModel
         onFailureSlot.captured.invoke(expectedErrorMessage)
