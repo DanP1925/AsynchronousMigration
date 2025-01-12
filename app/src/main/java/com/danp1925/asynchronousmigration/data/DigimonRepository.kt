@@ -22,7 +22,7 @@ class DigimonRepository(
                     }
                 }
 
-                override fun onFailure(call: Call<List<RemoteDigimon>>, p1: Throwable) {
+                override fun onFailure(call: Call<List<RemoteDigimon>>, error: Throwable) {
                 }
             }
         )

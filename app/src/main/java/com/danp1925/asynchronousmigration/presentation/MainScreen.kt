@@ -29,12 +29,12 @@ fun MainScreen(
 
     val uiState by viewModel.uiState.collectAsStateWithLifecycle()
 
-    MainScreenContent(digimons = uiState)
+    MainScreenContent(uiState = uiState)
 }
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun MainScreenContent(digimons: List<Digimon>) {
+fun MainScreenContent(uiState: MainUiState) {
     Scaffold(
         topBar = {
             TopAppBar(
@@ -48,30 +48,48 @@ fun MainScreenContent(digimons: List<Digimon>) {
             )
         }
     ) { innerPadding ->
-        LazyColumn(modifier = Modifier.padding(innerPadding)) {
-            items(digimons) { digimon ->
-                Row(
-                    modifier = Modifier.height(24.dp)
-                ) {
-                    Text(digimon.id)
-                    Spacer(modifier = Modifier.width(16.dp))
-                    Text(digimon.name)
-                }
+        when (uiState) {
+            is MainUiState.Success -> {
+                MainScreenSuccessful(
+                    digimons = uiState.digimons,
+                    modifier = Modifier.padding(innerPadding)
+                )
+            }
+
+            is MainUiState.Error -> {}
+            MainUiState.Loading -> {}
+        }
+    }
+}
+
+@Composable
+private fun MainScreenSuccessful(
+    digimons: List<Digimon>,
+    modifier: Modifier = Modifier
+) {
+    LazyColumn(modifier = modifier) {
+        items(digimons) { digimon ->
+            Row(
+                modifier = Modifier.height(24.dp)
+            ) {
+                Text(digimon.id)
+                Spacer(modifier = Modifier.width(16.dp))
+                Text(digimon.name)
             }
         }
     }
 }
 
-@Preview(showBackground = true, showSystemUi = true)
+@Preview(showBackground = true)
 @Composable
-fun GreetingPreview() {
+fun MainScreenSuccessfulPreview() {
     val digimons = listOf(
         Digimon(name = "Monodramon", id = "BT1-010"),
         Digimon(name = "Agumon", id = "BT1-011")
     )
 
     AsynchronousMigrationTheme {
-        MainScreenContent(digimons = digimons)
+        MainScreenSuccessful(digimons = digimons)
     }
 }
 

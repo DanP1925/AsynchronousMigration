@@ -11,15 +11,19 @@ class MainViewModel(
     private val getDigimons: GetDigimonsUseCase
 ) : ViewModel() {
 
-    private val _uiState = MutableStateFlow(emptyList<Digimon>())
-    val uiState: StateFlow<List<Digimon>> = _uiState
+    private val _uiState = MutableStateFlow(MainUiState.Success())
+    val uiState: StateFlow<MainUiState> = _uiState
 
     init {
         getDigimons(
-            onSuccess = { digimons ->
-                _uiState.update { digimons }
-            }
+            onSuccess = { digimons -> _uiState.update { MainUiState.Success(digimons) } }
         )
     }
 
+}
+
+sealed class MainUiState {
+    data object Loading : MainUiState()
+    data class Success(val digimons: List<Digimon> = emptyList()) : MainUiState()
+    data class Error(val errorMessage: String) : MainUiState()
 }
